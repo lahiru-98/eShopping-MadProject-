@@ -1,5 +1,6 @@
 package com.example.eshopping;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,13 +98,23 @@ public class HomeActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int i, @NonNull Products products) {
+            protected void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int i, @NonNull final Products products) {
 
                 productViewHolder.txtProductName.setText(products.getPname());
                 productViewHolder.txtProductDescription.setText(products.getDescription());
                 productViewHolder.txtProdutPrice.setText("Price = "+products.getPrice()+"/=");
                 Picasso.get().load(products.getImage()).into(productViewHolder.imageView);
 
+                //getting the id of the user clicked product
+                productViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(HomeActivity.this,ProductDetailsActivity.class);
+                        intent.putExtra("pid",products.getPid()); //getting the product id
+                        startActivity(intent);
+
+                    }
+                });
             }
 
             @NonNull
