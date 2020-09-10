@@ -1,16 +1,26 @@
 package com.example.eshopping;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.eshopping.Model.Products;
 import com.example.eshopping.Prevalent.Prevalent;
+import com.example.eshopping.ViewHolder.ProductViewHolder;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,6 +28,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,10 +37,17 @@ public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    private DatabaseReference productRef;
+    private RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutmanager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        productRef = FirebaseDatabase.getInstance().getReference().child("Products");
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
@@ -54,6 +73,11 @@ public class HomeActivity extends AppCompatActivity {
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
         //setting currently logged user name
         userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+        recyclerView  =findViewById(R.id.recycler_menu);
+        recyclerView.setHasFixedSize(true);
+        layoutmanager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutmanager);
+
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home)                       //changed here **************
@@ -64,6 +88,36 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
+                .setQuery(productRef, Products.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int i, @NonNull Products products) {
+
+                productViewHolder.txtProductName.setText(products.getPname());
+                productViewHolder.txtProductDescription.setText(products.getDescription());
+                productViewHolder.txtProdutPrice.setText("Price = "+products.getPrice()+"/=");
+                Picasso.get().load(products.getImage()).into(productViewHolder.imageView);
+
+            }
+
+            @NonNull
+            @Override
+            public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+              View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_items_layout,parent,false);
+              ProductViewHolder holder = new ProductViewHolder(view);
+                      return holder;
+            }
+        };
+
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
