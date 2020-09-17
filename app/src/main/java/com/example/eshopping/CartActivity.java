@@ -1,22 +1,28 @@
 package com.example.eshopping;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eshopping.Model.Cart;
 import com.example.eshopping.Prevalent.Prevalent;
 import com.example.eshopping.ViewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -61,7 +67,7 @@ public class CartActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Cart,CartViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull CartViewHolder cartViewHolder, int i, @NonNull Cart cart) {
+                    protected void onBindViewHolder(@NonNull CartViewHolder cartViewHolder, int i, @NonNull final Cart cart) {
 
 
                         cartViewHolder.txtproductQuantity.setText(cart.getQuantity());
@@ -72,7 +78,73 @@ public class CartActivity extends AppCompatActivity {
                         // oneTypeProductTprice = Integer.parseInt(model.getPrice())*Integer.parseInt(model.getQuantity());
                         //calculate total price
                         // overallTotalPrice = overallTotalPrice + oneTypeProductTprice;
+                        cartViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
 
+                                //create a dialog box with two options edit and delete
+                                CharSequence options[] = new CharSequence[]
+
+                                        {
+                                                "Edit",
+                                                "Remove"
+
+                                        };
+                                AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+                                //add title for dialog box
+                                builder.setTitle("Cart Options:");
+
+                                // set click listnner to these buttons
+
+                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                                        if(i == 0){
+
+                                            // if user clicks on edit button , user sends to product details activity
+                                            Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
+
+                                            // when user clicks on an item in the cart, get the id of that item
+                                            intent.putExtra("pid",cart.getPid());
+                                            startActivity(intent);
+
+                                        }
+                                        if(i == 1){
+
+                                            cartListRef.child("User View")
+                                                    .child(Prevalent.currentOnlineUser.getPhone())
+                                                    .child("Products")
+                                                    .child(cart.getPid())
+                                                    .removeValue()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                            if(task.isSuccessful()){
+                                                                Toast.makeText(CartActivity.this, "Item removed successfully", Toast.LENGTH_SHORT).show();
+
+                                                                //send the user to home activity
+
+                                                                Intent intent = new Intent(CartActivity.this, HomeActivity.class);
+                                                                startActivity(intent);
+                                                            }
+
+
+                                                        }
+                                                    });
+
+                                        }
+                                    }
+                                });
+
+
+                                    builder.show();
+
+                            }
+                        });
 
                     }
 
