@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminMaintainProductsActivity"></activity>
+        <activity android:name=".ViewHolder.SellerHome"></activity>
+        <activity android:name=".SellerLoginActivity" />
+        <activity android:name=".SellerRegistration" />
+        <activity android:name=".AdminMaintainProductsActivity" />
         <activity android:name=".AdminUserProductsActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".AdminNewOrdersActivity" />
