@@ -80,7 +80,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     private void ValidateProductData() {
 
         Description = InputProductDescription.getText().toString();
-        Price = InputProductPrice.getText().toString();
+        Price = InputProductPrice.getText().toString().trim();
         Pname = InputProductName.getText().toString();
 
 
