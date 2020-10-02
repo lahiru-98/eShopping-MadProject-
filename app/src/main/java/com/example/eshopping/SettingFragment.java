@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
@@ -48,14 +49,14 @@ public class SettingFragment extends Fragment {
 
     View view;
     private CircleImageView profileImageView;
-    private EditText fullNameEditText, UserPhoneEditText, addressEditText;
-    private TextView profileChangeTextBtn, closeTextBtn, saveTextBtn;
+    private EditText fullNameEditText, userPhoneEditText, addressEditText;
+    private TextView profileChangeTextBtn,  closeTextBtn, saveTextButton;
     private Button securityQuestionBtn;
 
     private Uri imageUri;
-    private String myUri = "";
+    private String myUrl = "";
     private StorageTask uploadTask;
-    private DatabaseReference storageProfilePictureRef;
+    private StorageReference storageProfilePrictureRef;
     private String checker = "";
 
     // TODO: Rename parameter arguments, choose names that match
@@ -98,12 +99,39 @@ public class SettingFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_setting, container, false);
+
+
+
+        storageProfilePrictureRef = FirebaseStorage.getInstance().getReference().child("Profile pictures");
+
+        profileImageView = (CircleImageView) view.findViewById(R.id.setting_profile_image);
+        fullNameEditText = (EditText) view.findViewById(R.id.setting_full_name);
+        userPhoneEditText = (EditText) view.findViewById(R.id.setting_phone_number);
+        addressEditText = (EditText) view.findViewById(R.id.setting_address);
+        profileChangeTextBtn = (TextView) view.findViewById(R.id.profile_image_change_btn);
+        closeTextBtn = (TextView) view.findViewById(R.id.close_settings_btn);
+        saveTextButton = (TextView) view.findViewById(R.id.update_account_setting_btn);
+        securityQuestionBtn = view.findViewById(R.id.security_questions_btn);
+
+
+
+        userInfoDisplay(profileImageView, fullNameEditText, userPhoneEditText, addressEditText);
+
 
         closeTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-             // finish();
+                getActivity().getFragmentManager().popBackStack();
+
             }
         });
 
@@ -111,20 +139,20 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-
                 Intent intent = new Intent(getContext(), ResetPasswordActivity.class);
                 intent.putExtra("check", "settings");
                 startActivity(intent);
             }
         });
 
-        saveTextBtn.setOnClickListener(new View.OnClickListener() {
+
+        saveTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-               if (checker.equals("clicked"))
+                if (checker.equals("clicked"))
                 {
-                   userInfoSaved();
+                    userInfoSaved();
                 }
                 else
                 {
@@ -141,40 +169,37 @@ public class SettingFragment extends Fragment {
                 checker = "clicked";
 
                 CropImage.activity(imageUri)
-                        .setAspectRatio(1,1)
-                     .start(getParentFragment().getActivity());
+                        .setAspectRatio(1, 1)
+                        .start(getParentFragment().getActivity());
             }
         });
 
 
+        return view;
     }
 
     private void updateOnlyUserInfo() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        HashMap <String, Object> userMap = new HashMap<>();
-        userMap.put("name", fullNameEditText.getText().toString());
-        userMap.put("address", addressEditText.getText().toString());
-        userMap.put("phoneOrder", UserPhoneEditText.getText().toString());
-
+        HashMap<String, Object> userMap = new HashMap<>();
+        userMap. put("name", fullNameEditText.getText().toString());
+        userMap. put("address", addressEditText.getText().toString());
+        userMap. put("phoneOrder", userPhoneEditText.getText().toString());
         ref.child(Prevalent.currentOnlineUser.getPhone()).updateChildren(userMap);
 
-        startActivity(new Intent(getContext(), MainActivity.class));
-        Toast.makeText(getContext(), "Profile Info Update Successfuly", Toast.LENGTH_SHORT).show();
-
-
+        startActivity(new Intent(getContext(), HomeActivity.class));
+        Toast.makeText(getContext(), "Profile Info update successfully.", Toast.LENGTH_SHORT).show();
+        getActivity().getFragmentManager().popBackStack();
 
     }
 
 
-
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data!=null )
+        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE  &&  resultCode==RESULT_OK  &&  data!=null)
         {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             imageUri = result.getUri();
@@ -183,9 +208,10 @@ public class SettingFragment extends Fragment {
         }
         else
         {
-            Toast.makeText(getContext(),"Error, Try Again", Toast.LENGTH_SHORT);
+            Toast.makeText(getContext(), "Error, Try Again.", Toast.LENGTH_SHORT).show();
+
             startActivity(new Intent(getContext(),SettingFragment.class));
-            getActivity().finish();
+            getActivity().getFragmentManager().popBackStack();
         }
     }
 
@@ -199,7 +225,7 @@ public class SettingFragment extends Fragment {
         {
             Toast.makeText(getContext(),"Name is address",Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(UserPhoneEditText.getText().toString()))
+        else if(TextUtils.isEmpty(userPhoneEditText.getText().toString()))
         {
             Toast.makeText(getContext(),"Name is mandatory",Toast.LENGTH_SHORT).show();
         }
@@ -209,75 +235,68 @@ public class SettingFragment extends Fragment {
         }
     }
 
-    private void uploadImage()
-    {
+    private void uploadImage() {
+
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setTitle("Update Profile");
-        progressDialog.setMessage("Please wait, while we are updating account information");
+        progressDialog.setMessage("Please wait, while we are updating your account information");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        if(imageUri != null)
-        {
-            final DatabaseReference fileRef = storageProfilePictureRef
-                    .child(Prevalent.currentOnlineUser.getPhone()+".jpg");
+        if (imageUri != null){
+            final StorageReference fileRef = storageProfilePrictureRef
+                    .child(Prevalent.currentOnlineUser.getPhone() + ".jpg");
 
             uploadTask = fileRef.putFile(imageUri);
 
             uploadTask.continueWithTask(new Continuation() {
                 @Override
-                public Object then(@NonNull Task task) throws Exception
-                {
-                    if(!task.isSuccessful())
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful())
                     {
                         throw task.getException();
                     }
+
                     return fileRef.getDownloadUrl();
                 }
-            })
-            .addOnCompleteListener(new OnCompleteListener<Uri>() {
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task)
                 {
-                    if(task.isSuccessful())
+                    if (task.isSuccessful())
                     {
-                        Uri downloadUri = task.getResult();
-                        myUri = downloadUri.toString();
+                        Uri downloadUrl = task.getResult();
+                        myUrl = downloadUrl.toString();
 
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
 
-                        HashMap <String, Object> userMap = new HashMap<>();
-                        userMap.put("name", fullNameEditText.getText().toString());
-                        userMap.put("address", addressEditText.getText().toString());
-                        userMap.put("phoneOrder", UserPhoneEditText.getText().toString());
-                        userMap.put("image", myUri);
-
+                        HashMap<String, Object> userMap = new HashMap<>();
+                        userMap. put("name", fullNameEditText.getText().toString());
+                        userMap. put("address", addressEditText.getText().toString());
+                        userMap. put("phoneOrder", userPhoneEditText.getText().toString());
+                        userMap. put("image", myUrl);
                         ref.child(Prevalent.currentOnlineUser.getPhone()).updateChildren(userMap);
 
                         progressDialog.dismiss();
 
-                        startActivity(new Intent(getContext(), MainActivity.class));
-                        Toast.makeText(getContext(),"Profile Info Update Successfuly",Toast.LENGTH_SHORT).show();
-                        //finish();
-                    }
+                        startActivity(new Intent(getContext(), HomeActivity.class));
+                        Toast.makeText(getContext(), "Profile Info update successfully.", Toast.LENGTH_SHORT).show();
+                        getActivity().getFragmentManager().popBackStack();
 
+                    }
                     else
                     {
                         progressDialog.dismiss();
-                        Toast.makeText(getContext(),"Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error.", Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });
-      }
-
-        else
+        }else
         {
-            Toast.makeText(getContext(),"Image is not selected",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "image is not selected.", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
 
 
     private void userInfoDisplay(final CircleImageView profileImageView, final EditText fullNameEditText, final EditText userPhoneEditText, final EditText addressEditText)
@@ -309,28 +328,5 @@ public class SettingFragment extends Fragment {
 
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_setting, container, false);
-
-
-
-        storageProfilePictureRef = FirebaseDatabase.getInstance().getReference().child("profile pictures");
-
-        profileImageView = (CircleImageView) view.findViewById(R.id.setting_profile_image);
-        fullNameEditText = (EditText) view .findViewById(R.id.setting_full_name);
-        UserPhoneEditText = (EditText) view .findViewById(R.id.setting_phone_number);
-        addressEditText = (EditText) view .findViewById(R.id.setting_address);
-        profileChangeTextBtn = (TextView) view.findViewById(R.id.profile_image_change_btn);
-        closeTextBtn = (TextView) view.findViewById(R.id.close_settings_btn);
-        saveTextBtn = (TextView) view.findViewById(R.id.update_account_setting_btn);
-        securityQuestionBtn = (Button) view.findViewById(R.id.security_questions_btn);
-
-        userInfoDisplay (profileImageView, fullNameEditText, UserPhoneEditText,addressEditText);
-        return view;
     }
 }
