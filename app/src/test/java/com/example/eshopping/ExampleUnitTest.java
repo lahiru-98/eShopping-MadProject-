@@ -11,6 +11,16 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
+    private SettingFragment settingFragment;
+
+    @Before
+    public void setup(){
+        settingFragment = new SettingFragment();
+    }
+
+
+
     private AdminAddNewProductActivity adminAddNewProductActivity;
 
 
@@ -37,6 +47,7 @@ public class ExampleUnitTest {
         double result = adminAddNewProductActivity.setPriceAfterDiscount(30,"500");
         assertEquals(470,result,0.01);
     }
+
 
 
 }
