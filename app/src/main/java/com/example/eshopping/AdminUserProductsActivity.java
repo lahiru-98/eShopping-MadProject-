@@ -1,4 +1,4 @@
-package com.example.eshopping.Admin;
+package com.example.eshopping;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

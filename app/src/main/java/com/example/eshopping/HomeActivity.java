@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.eshopping.Admin.AdminMaintainProductsActivity;
 import com.example.eshopping.Model.Products;
 import com.example.eshopping.Prevalent.Prevalent;
 import com.example.eshopping.ViewHolder.ProductViewHolder;

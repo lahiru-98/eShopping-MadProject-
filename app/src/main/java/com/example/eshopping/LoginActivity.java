@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eshopping.Admin.AdminCategoryActivity;
 import com.example.eshopping.Model.Users;
 import com.example.eshopping.Prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
@@ -113,8 +112,7 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.setMessage("Please wait, while we are checking the credentials.");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
-
-
+            
             AllowAccessToAccount(phone, password);
         }
     }

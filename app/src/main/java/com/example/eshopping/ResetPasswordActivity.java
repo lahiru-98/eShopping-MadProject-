@@ -47,7 +47,6 @@ public class ResetPasswordActivity extends AppCompatActivity
         question1 = findViewById(R.id.question_1);
         question2 = findViewById(R.id.question_2);
         verifyButton = findViewById(R.id.verify_btn);
-
     }
 
     @Override
