@@ -17,4 +17,10 @@
         android:name="com.example.eshopping.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/searchProductsFragment2"
+        android:name="com.example.eshopping.SearchProductsFragment"
+        android:label="fragment_search_products"
+        tools:layout="@layout/fragment_search_products" />
+
 </navigation>
