@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SearchView;
 
 public class AdminCategoryActivity extends AppCompatActivity {
 
@@ -16,7 +15,10 @@ public class AdminCategoryActivity extends AppCompatActivity {
     private ImageView glasses, hatsCaps, walletsBagsPurses, shoes;
     private ImageView headPhonesHandFree, Laptops, watches, mobilePhones;
 
+    //add discounts for each categories
+
     private Button LogoutBtn, CheckOrdersBtn, maintainProductsBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AdminCategoryActivity.this,MainActivity.class);
+                Intent intent = new Intent(AdminCategoryActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
@@ -49,7 +51,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
         CheckOrdersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AdminCategoryActivity.this,AdminNewOrdersActivity.class);
+                Intent intent = new Intent(AdminCategoryActivity.this, AdminNewOrdersActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,6 +78,8 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "tShirts");
+                //adding discountRate
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -87,6 +91,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Sports tShirts");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -98,6 +103,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Female Dresses");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -109,6 +115,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Sweathers");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -120,6 +127,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Glasses");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -131,6 +139,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Hats Caps");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -143,6 +152,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Wallets Bags Purses");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -154,6 +164,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Shoes");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -166,6 +177,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "HeadPhones HandFree");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -177,6 +189,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Laptops");
+                intent.putExtra("discountRate",5);
                 startActivity(intent);
             }
         });
@@ -188,6 +201,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Watches");
+                intent.putExtra("discountRate",8);
                 startActivity(intent);
             }
         });
@@ -199,6 +213,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
                 intent.putExtra("category", "Mobile Phones");
+                intent.putExtra("discountRate",10);
                 startActivity(intent);
             }
         });

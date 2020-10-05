@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import com.example.eshopping.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -93,6 +91,7 @@ public class HomeActivity extends AppCompatActivity {
             //setting currently logged user name
             userNameTextView.setText(Prevalent.currentOnlineUser.getName());
         }
+        Picasso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
 
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -134,7 +133,11 @@ public class HomeActivity extends AppCompatActivity {
                         if (type.equals("Admin")) {
 
                             Intent intent = new Intent(HomeActivity.this, AdminMaintainProductsActivity.class);
+
                             intent.putExtra("pid", products.getPid()); //getting the product id
+
+                            intent.putExtra("pid",products.getPid()); //getting the product id
+
                             startActivity(intent);
 
                         } else {
