@@ -87,7 +87,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         // give the format for get the time
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
-        saveCurrentTime=currentDate.format(calForDate.getTime());
+        saveCurrentTime=currentTime.format(calForDate.getTime());
 
         //create the database reference
         final   DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");

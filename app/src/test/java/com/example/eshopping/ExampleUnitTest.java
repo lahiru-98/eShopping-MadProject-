@@ -30,6 +30,35 @@ public class ExampleUnitTest {
     }
 
 
+    private CartActivity cartActivity;
+
+    //IT19101316
+
+    @Before
+
+    public void setUp(){
+
+        cartActivity=new CartActivity();
+    }
+
+    @Test
+
+    public void testGetOneTypeProductPrice(){
+
+        double result = cartActivity.getOneTypeProductPrice(1615,2);
+        assertEquals(3230,result,0.01);
+        
+    }
+
+    @Test
+    public void testCartTotalPrice(){
+
+        double result = cartActivity.getCartTotalPrice(3230);
+        assertEquals(3230,result,0.01);
+
+    }
+
+
     // IT 19158778 -----------------------------
     @Before
     public void setup(){
@@ -47,6 +76,7 @@ public class ExampleUnitTest {
         double result = adminAddNewProductActivity.setPriceAfterDiscount(30,"500");
         assertEquals(470,result,0.01);
     }
+
 
 
 

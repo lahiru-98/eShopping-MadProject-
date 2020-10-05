@@ -36,7 +36,7 @@ public class CartActivity extends AppCompatActivity {
     private Button nextProcessButton;
     private TextView txtTotalAmount,txtMsg1;
 
-    private int overallTotalPrice = 0;
+    private Double overallTotalPrice = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +94,12 @@ public class CartActivity extends AppCompatActivity {
                         cartViewHolder.txtproductPrice.setText(cart.getPrice());
 
                         try{
-                            int oneTypeProductTprice =Integer.valueOf(cart.getPrice())* Integer.valueOf(cart.getQuantity());
-                            //int oneTypeProductTprice = Integer.parseInt(cart.getPrice())* Integer.parseInt(cart.getQuantity());
+
+                            double oneTypeProductTprice=getOneTypeProductPrice(Double.parseDouble(cart.getPrice()),Double.parseDouble(cart.getQuantity()));
+                           // int oneTypeProductTprice =Integer.valueOf(cart.getPrice())* Integer.valueOf(cart.getQuantity());
                             //calculate total price
-                            overallTotalPrice = overallTotalPrice + oneTypeProductTprice;
+                            overallTotalPrice = getCartTotalPrice(oneTypeProductTprice);
+
                         }catch (Exception e){
                             Toast.makeText(CartActivity.this, e.toString(), Toast.LENGTH_LONG).show();
                         }
@@ -188,6 +190,19 @@ public class CartActivity extends AppCompatActivity {
         adapter.startListening();
 
     }
+
+    public double getOneTypeProductPrice(double price,double quantity){
+
+        return price*quantity;
+    }
+
+    public double getCartTotalPrice(double oneTypeProductTprice){
+
+         overallTotalPrice=overallTotalPrice+oneTypeProductTprice;
+         return overallTotalPrice;
+    }
+
+    
 
     private void checkOrderState(){
 
