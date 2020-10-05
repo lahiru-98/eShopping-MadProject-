@@ -12,17 +12,7 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
 
-    private SettingFragment settingFragment;
-
-    @Before
-    public void setup(){
-        settingFragment = new SettingFragment();
-    }
-
-
-
     private AdminAddNewProductActivity adminAddNewProductActivity;
-
 
     @Test
     public void addition_isCorrect() {
@@ -70,6 +60,7 @@ public class ExampleUnitTest {
         double result = adminAddNewProductActivity.calcDiscount(500,5);
         assertEquals(25,result,0.01);
     }
+
 
     @Test
     public void testetPriceAfterDiscount(){

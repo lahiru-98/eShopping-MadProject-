@@ -12,10 +12,7 @@
         <item
             android:id="@+id/searchProductsFragment2"
             android:icon="@drawable/orders"
-
-            android:title="Orders"
-            android:iconTint="@android:color/white"/>
-
+            android:iconTint="@android:color/white"
             android:title="Search" />
 
         <item

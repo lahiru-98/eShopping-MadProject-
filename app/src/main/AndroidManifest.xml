@@ -19,7 +19,7 @@
 
         <activity android:name=".ConfirmFinalOrderActivity" />
 
-        <activity android:name=".AdminMaintainProductsActivity"></activity>
+
 
         <activity android:name=".AdminUserProductsActivity" />
 

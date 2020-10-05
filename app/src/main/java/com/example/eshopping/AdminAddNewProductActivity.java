@@ -131,7 +131,7 @@ public class  AdminAddNewProductActivity extends AppCompatActivity {
     }
 
     public double setPriceAfterDiscount(double discount,String enteredPrice){
-       //converting the price to double
+        //converting the price to double
         double currentPrice = Double.parseDouble(enteredPrice);
         double newPrice = currentPrice - discount;
 
