@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Offers.OffersMainActivity">
+
+
+
+    <TextView
+        android:id="@+id/title_offer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_seller"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="OFFERS"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@id/title_offer"
+        android:hint="start date"
+        android:inputType="date"
+        android:textSize="16dp"
+        android:layout_margin="6dp"
+        android:layout_marginTop="30dp"
+        />
+
+    <EditText
+        android:id="@+id/end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/start_date"
+        android:hint="end date"
+        android:inputType="date"
+        android:textSize="16dp"
+        android:layout_margin="8dp"
+        />
+
+    <EditText
+        android:id="@+id/offer_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/end_date"
+        android:hint="offer.."
+        android:inputType="text"
+        android:textSize="16dp"
+        android:layout_margin="8dp"
+        />
+
+
+    <EditText
+        android:id="@+id/offer_des"
+        android:layout_width="403dp"
+        android:layout_height="121dp"
+        android:layout_below="@+id/offer_name"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="15dp"
+        android:hint="description..."
+        android:inputType="textMultiLine"
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/send_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/offer_des"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="-3dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/holo_green_light"
+        android:text="SEND"
+        android:textAllCaps="false"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/ViewBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/send_btn"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="-3dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/holo_green_light"
+        android:text="View offers"
+        android:textAllCaps="false"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/title_cal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ViewBtn"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="#FFEB3B"
+        android:gravity="center"
+        android:text="Discount calculator"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/get_profit"
+        android:layout_width="226dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ViewBtn"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="6dp"
+        android:hint="Expected Profit"
+        android:inputType="date"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/get_product_price"
+        android:layout_width="226dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/get_profit"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="6dp"
+        android:hint="Product price "
+        android:inputType="date"
+        android:textSize="16dp" />
+    <EditText
+    android:id="@+id/calc_discount"
+    android:layout_width="226dp"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/get_product_price"
+    android:layout_marginStart="6dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginEnd="6dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginBottom="6dp"
+    android:hint="Discount"
+    android:inputType="date"
+    android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/calc_btn"
+        android:layout_width="114dp"
+        android:layout_height="90dp"
+        android:layout_below="@+id/offer_des"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="266dp"
+        android:layout_marginTop="196dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="71dp"
+        android:background="@android:color/holo_green_light"
+        android:text="CALC"
+        android:textAllCaps="false"
+        android:textSize="18dp" />
+
+</RelativeLayout>

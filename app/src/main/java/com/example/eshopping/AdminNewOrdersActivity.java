@@ -46,8 +46,8 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<AdminOrders> options =
                 new FirebaseRecyclerOptions.Builder<AdminOrders>()
-                       .setQuery(ordersRef, AdminOrders.class)
-                       .build();
+                        .setQuery(ordersRef, AdminOrders.class)
+                        .build();
 
         FirebaseRecyclerAdapter<AdminOrders,AdminOrdersViewHolder> adapter =
                 new FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder>((options) ) {
@@ -106,7 +106,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                             }
                         });
 
-                    }
+                }
 
                     @NonNull
                     @Override
