@@ -12,6 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+
+
+
+import android.widget.NumberPicker;
+import android.widget.TextView;
+
+
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
@@ -29,7 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class AdminAddNewProductActivity extends AppCompatActivity {
+public class  AdminAddNewProductActivity extends AppCompatActivity {
 
 
     private String CategoryName, Description, Price, Pname, saveCurrentDate, saveCurrentTime;
@@ -42,6 +50,10 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     private StorageReference ProductImagesRef;
     private DatabaseReference ProductsRef;
     private ProgressDialog loadingBar;
+    private double discountRate; //to store the discount rated of each categories
+
+    private TextView discountText;
+    private String enteredPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +61,8 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_add_new_product);
 
         CategoryName = getIntent().getExtras().get("category").toString();
+        discountRate = getIntent().getIntExtra("discountRate",0);
+
         ProductImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
@@ -56,8 +70,13 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         InputProductImage = (ImageView) findViewById(R.id.select_product_image);
         InputProductName = (EditText) findViewById(R.id.product_name);
         InputProductDescription = (EditText) findViewById(R.id.product_description);
+        discountText = (TextView) findViewById(R.id.discountTxt);
         InputProductPrice = (EditText) findViewById(R.id.product_price);
         loadingBar = new ProgressDialog(this);
+
+
+        //display discount text
+        discountText.setText("* :"+discountRate+"% of discount will apply");
 
 
         InputProductImage.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +98,10 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     private void ValidateProductData() {
 
         Description = InputProductDescription.getText().toString();
-        Price = InputProductPrice.getText().toString();
+
+        enteredPrice  = InputProductPrice.getText().toString().trim();
+        double dis = calcDiscount(Double.parseDouble(enteredPrice),discountRate);
+        Price = String.valueOf(setPriceAfterDiscount(dis,enteredPrice));
         Pname = InputProductName.getText().toString();
 
 
@@ -105,6 +127,20 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         }
     }
 
+    //method to apply the discount
+    public double calcDiscount(double price,double discountRate){
+        double discount = price * (discountRate/100);
+        return discount;
+    }
+
+    public double setPriceAfterDiscount(double discount,String enteredPrice){
+        //converting the price to double
+        double currentPrice = Double.parseDouble(enteredPrice);
+        double newPrice = currentPrice - discount;
+
+        return  newPrice;
+    }
+
     private void StoreProductInformation() {
 
         loadingBar.setTitle("Add New Product");
@@ -112,8 +148,8 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
 
+        //generating key based on the date and the time
         Calendar calendar = Calendar.getInstance();
-
         SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 

@@ -3,11 +3,12 @@ package com.example.eshopping;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eshopping.Model.Products;
 import com.example.eshopping.Prevalent.Prevalent;
@@ -15,7 +16,6 @@ import com.example.eshopping.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutmanager;
 
-    private String type ="";
+    private String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle != null){
+        if (bundle != null) {
             type = getIntent().getStringExtra("Admin");
         }
 
@@ -68,8 +68,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(!type.equals("Admin")){
-                    Intent intent = new Intent(HomeActivity.this,CartActivity.class);
+                if (!type.equals("Admin")) {
+                    Intent intent = new Intent(HomeActivity.this, CartActivity.class);
                     startActivity(intent);
                 }
             }
@@ -79,18 +79,22 @@ public class HomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
+
+
         //*******************************************************************************
         View headerView = navigationView.getHeaderView(0);
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
-        if(!type.equals("Admin")){
+        if (!type.equals("Admin")) {
 
             //setting currently logged user name
             userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+            Picasso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
         }
 
-        recyclerView  =findViewById(R.id.recycler_menu);
+
+        recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
         layoutmanager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutmanager);
@@ -118,7 +122,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 productViewHolder.txtProductName.setText(products.getPname());
                 productViewHolder.txtProductDescription.setText(products.getDescription());
-                productViewHolder.txtProdutPrice.setText("Price = "+products.getPrice()+"/=");
+                productViewHolder.txtProdutPrice.setText("Price = " + products.getPrice() + "/=");
                 Picasso.get().load(products.getImage()).into(productViewHolder.imageView);
 
                 //getting the id of the user clicked product
@@ -126,17 +130,21 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                       //if admin clicked on som item re direct admin to a new activity
-                        if(type.equals("Admin")){
+                        //if admin clicked on som item re direct admin to a new activity
+                        if (type.equals("Admin")) {
 
-                            Intent intent = new Intent(HomeActivity.this,AdminMaintainProductsActivity.class);
+                            Intent intent = new Intent(HomeActivity.this, AdminMaintainProductsActivity.class);
+
+                            intent.putExtra("pid", products.getPid()); //getting the product id
+
                             intent.putExtra("pid",products.getPid()); //getting the product id
+
                             startActivity(intent);
 
-                        }else{
+                        } else {
 
-                            Intent intent = new Intent(HomeActivity.this,ProductDetailsActivity.class);
-                            intent.putExtra("pid",products.getPid()); //getting the product id
+                            Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
+                            intent.putExtra("pid", products.getPid()); //getting the product id
                             startActivity(intent);
                         }
 
@@ -147,15 +155,16 @@ public class HomeActivity extends AppCompatActivity {
             @NonNull
             @Override
             public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-              View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_items_layout,parent,false);
-              ProductViewHolder holder = new ProductViewHolder(view);
-                      return holder;
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_items_layout, parent, false);
+                ProductViewHolder holder = new ProductViewHolder(view);
+                return holder;
             }
         };
 
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -169,7 +178,6 @@ public class HomeActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 
 
 }
