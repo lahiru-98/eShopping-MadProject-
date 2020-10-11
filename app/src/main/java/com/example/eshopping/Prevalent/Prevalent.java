@@ -1,5 +1,6 @@
 package com.example.eshopping.Prevalent;
 
+import com.example.eshopping.Model.Sellers;
 import com.example.eshopping.Model.Users;
 
 public class Prevalent {
@@ -8,4 +9,6 @@ public class Prevalent {
 
     public static final String UserPhoneKey = "UserPhone";
     public static final String UserPasswordKey = "UserPassword";
+
+    private static Sellers  currentOnlineSellers;
 }

@@ -13,11 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".Offers.offersMaintainActivity"></activity>
+        <activity android:name=".Offers.OfferPanel" />
+        <activity android:name=".Offers.OffersMainActivity" />
+        <activity android:name=".SellerMaintainProductActivity" />
+        <activity android:name=".AdminAddNewProductActivity$SellerAddNewProductActivity" />
+        <activity android:name=".SellerCategoryActivity" />
+        <activity android:name=".SellerHome" />
+        <activity android:name=".SellerLoginActivity" />
+        <activity android:name=".SellerRegistration" />
+        <activity android:name=".AdminMaintainProductsActivity" />
+
+
         <activity android:name=".ResetPasswordActivity"></activity>
         <activity android:name=".AdminMaintainProductsActivity" />
 
 
         <activity android:name=".ConfirmFinalOrderActivity" />
+
 
 
 
