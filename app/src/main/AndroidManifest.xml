@@ -26,7 +26,7 @@
 
 
         <activity android:name=".ResetPasswordActivity"></activity>
-        <activity android:name=".AdminMaintainProductsActivity" />
+
 
 
         <activity android:name=".ConfirmFinalOrderActivity" />

@@ -89,9 +89,9 @@ public class CartActivity extends AppCompatActivity {
                     protected void onBindViewHolder(@NonNull CartViewHolder cartViewHolder, int i, @NonNull final Cart cart) {
 
 
-                        cartViewHolder.txtproductQuantity.setText(cart.getQuantity());
+                        cartViewHolder.txtproductQuantity.setText("Quantity : "+cart.getQuantity());
                         cartViewHolder.txtproductName.setText(cart.getPname());
-                        cartViewHolder.txtproductPrice.setText(cart.getPrice());
+                        cartViewHolder.txtproductPrice.setText("Price : "+cart.getPrice());
 
                         try{
 

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.eshopping.AdminMaintainProductsActivity;
 import com.example.eshopping.HomeActivity;
+import com.example.eshopping.Model.SellerOffers;
 import com.example.eshopping.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +36,7 @@ public class OffersMainActivity extends AppCompatActivity {
 
    //ListView listViewOffers;
 
-    List<Offers> offerList;
+    List<SellerOffers> offerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class OffersMainActivity extends AppCompatActivity {
                 offerList.clear();
 
                 for(DataSnapshot offersSnapshot : dataSnapshot.getChildren()){
-                    Offers offers=offersSnapshot.getValue(Offers.class);
+                    SellerOffers offers=offersSnapshot.getValue(SellerOffers.class);
 
                     offerList.add(offers);
                 }
@@ -146,7 +147,7 @@ public class OffersMainActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(startDate)){
 
             String id=databaseOffer.push().getKey();
-            Offers offers=new Offers(id,startDate,endDate,Offer,Des);
+            SellerOffers offers=new SellerOffers(id,startDate,endDate,Offer,Des);
 
             databaseOffer.child(id).setValue(offers);
 

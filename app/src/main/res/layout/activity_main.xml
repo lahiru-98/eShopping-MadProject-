@@ -71,5 +71,19 @@
         android:layout_marginBottom="10dp"
 />
 
+    <TextView
+        android:id="@+id/offers_view_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OFFERS"
+        android:textSize="18dp"
+        android:layout_marginLeft="290dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:layout_below="@id/main_login_btn"
+        android:layout_marginTop="-35dp"
+        android:layout_marginBottom="10dp"
+        />
+
 
 </RelativeLayout>

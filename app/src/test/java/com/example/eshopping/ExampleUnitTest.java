@@ -18,40 +18,29 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
 
     private AdminAddNewProductActivity adminAddNewProductActivity;
+    private CartActivity cartActivity;
+    private OffersMainActivity offersMainActivity;
 
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
 
-
-   private OffersMainActivity offersMainActivity;
-
-    @Before
     public void setUp(){
         offersMainActivity=new OffersMainActivity();
+        cartActivity=new CartActivity();
+        adminAddNewProductActivity = new AdminAddNewProductActivity();
+
     }
 
+    //iresh
     @Test
     public void discount_isCorrect(){
         float Final =offersMainActivity.result(10,100);
         assertEquals(10,Final,0);
     }
 
-
-
-
-    private CartActivity cartActivity;
-
     //IT19101316
-
-    @Before
-
-    public void setUp(){
-
-        cartActivity=new CartActivity();
-    }
-
     @Test
 
     public void testGetOneTypeProductPrice(){
@@ -71,11 +60,6 @@ public class ExampleUnitTest {
 
 
     // IT 19158778 -----------------------------
-    @Before
-    public void setup(){
-        adminAddNewProductActivity = new AdminAddNewProductActivity();
-    }
-
     @Test
     public void testcalcDiscount(){
         double result = adminAddNewProductActivity.calcDiscount(500,5);
@@ -88,8 +72,5 @@ public class ExampleUnitTest {
         double result = adminAddNewProductActivity.setPriceAfterDiscount(30,"500");
         assertEquals(470,result,0.01);
     }
-
-
-
 
 }

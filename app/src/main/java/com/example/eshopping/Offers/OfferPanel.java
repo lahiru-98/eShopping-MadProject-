@@ -51,7 +51,7 @@ public class OfferPanel extends AppCompatActivity {
         offersList.setLayoutManager(new LinearLayoutManager(OfferPanel.this));
 
         Intent intent=getIntent();
-         sell=intent.getStringExtra("offerVery");
+        sell=intent.getStringExtra("offerVery");
 
        // Toast.makeText(this, "type is ="+ sell, Toast.LENGTH_SHORT).show();
 
@@ -91,8 +91,6 @@ public class OfferPanel extends AppCompatActivity {
 
 
                 sellerOffersViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-
-
 
                     @Override
                     public void onClick(View view) {
@@ -146,9 +144,11 @@ public class OfferPanel extends AppCompatActivity {
 
     //static class inside this class
 
-    public static class SellerOffersViewHolder extends RecyclerView.ViewHolder {
+    public static class SellerOffersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+
         public TextView startDate, endDate, offerName,Description;
 
+        public  offerClickListner listner;
 
         public SellerOffersViewHolder(View itemView) {
 
@@ -157,6 +157,17 @@ public class OfferPanel extends AppCompatActivity {
             endDate = itemView.findViewById(R.id.end_date);
             offerName = itemView.findViewById(R.id.offer_name);
             Description = itemView.findViewById(R.id.des);
+        }
+
+        public void setofferClickListner(offerClickListner listner){
+
+            this.listner=listner;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            listner.onClick(view, getAdapterPosition(),false);
         }
     }
 

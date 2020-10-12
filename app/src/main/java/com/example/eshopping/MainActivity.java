@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, OfferPanel.class);
+                intent.putExtra("offerVery","SELL");
                 startActivity(intent);
 
             }
